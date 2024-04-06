@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             ->has(Comment::factory(120)->recycle($posts))
             ->create([
                 'name' => 'Najibu Nsubuga',
-                'email' => 'test@example.com',
+                'email' => 'najibu@test.com',
+                'password' => bcrypt('Password')
             ]);
     }
 }
