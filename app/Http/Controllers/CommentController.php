@@ -18,7 +18,7 @@ class CommentController extends Controller
     public function store(Request $request, Post $post)
     {
         $data = $request->validate([
-            'body' =>'required|string|max:2500',
+            'body' => 'required|string|max:2500',
         ]);
 
         Comment::create([
@@ -27,7 +27,8 @@ class CommentController extends Controller
             'post_id' => $post->id,
         ]);
 
-        return to_route('posts.show', $post);
+        return to_route('posts.show', $post)
+            ->banner('Comment added.');
     }
 
     /**
@@ -36,12 +37,13 @@ class CommentController extends Controller
     public function update(Request $request, Comment $comment)
     {
         $data = $request->validate([
-            'body' =>'required|string|max:2500',
+            'body' => 'required|string|max:2500',
         ]);
 
         $comment->update($data);
 
-        return to_route('posts.show', ['post' => $comment->post_id, 'page' => $request->query('page')]);
+        return to_route('posts.show', ['post' => $comment->post_id, 'page' => $request->query('page')])
+            ->banner('Comment updated.');
     }
 
     /**
@@ -51,6 +53,7 @@ class CommentController extends Controller
     {
         $comment->delete();
 
-        return to_route('posts.show', ['post' => $comment->post_id, 'page' => $request->query('page')]);
+        return to_route('posts.show', ['post' => $comment->post_id, 'page' => $request->query('page')])
+            ->banner('Comment deleted.');
     }
 }
