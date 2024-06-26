@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Http\Resources\PostResource;
 use App\Http\Resources\CommentResource;
+use App\Http\Resources\PostResource;
+use App\Models\Post;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -14,13 +14,14 @@ class PostController extends Controller
     {
         $this->authorizeResource(Post::class);
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         return inertia('Posts/Index', [
-            'posts' => PostResource::collection(Post::with('user')->latest('id')->paginate()),
+            'posts' => PostResource::collection(Post::with('user')->latest()->latest('id')->paginate()),
         ]);
     }
 
@@ -38,14 +39,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' =>['required','min:10','max:120', 'string'],
-            'body' =>['required','min:100','max:10000', 'string'],
+            'title' => ['required', 'string', 'min:10', 'max:120'],
+            'body' => ['required', 'string', 'min:100', 'max:10000'],
         ]);
 
         $post = Post::create([
-                    ...$data,
-                    'user_id' => $request->user()->id,
-                ]);
+            ...$data,
+            'user_id' => $request->user()->id,
+        ]);
 
         return redirect($post->showRoute());
     }

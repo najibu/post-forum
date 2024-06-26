@@ -32,7 +32,7 @@ it('redirects to the post show page', function () {
 
     actingAs(User::factory()->create())->post(route('posts.comments.store', $post), [
         'body' => 'This is a comment.',
-    ])->assertRedirect(route('posts.show', $post));
+    ])->assertRedirect($post->showRoute());
 });
 
 it('requires a valid body', function ($value) {
@@ -48,4 +48,3 @@ it('requires a valid body', function ($value) {
     true,
     str_repeat('a', 2501),
 ]);
-

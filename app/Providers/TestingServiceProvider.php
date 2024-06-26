@@ -6,7 +6,6 @@ use Inertia\Testing\AssertableInertia;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Testing\TestResponse;
 
 class TestingServiceProvider extends ServiceProvider
