@@ -3,10 +3,10 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource { /** * Transform the resource into an array. * * @return array<string, mixed> */
+class PostResource extends JsonResource
+{ /** * Transform the resource into an array. * * @return array<string, mixed> */
     public function toArray(Request $request): array
     {
         return [
@@ -16,6 +16,9 @@ class PostResource extends JsonResource { /** * Transform the resource into an a
             'body' => $this->body,
             'updated_at' => $this->updated_at,
             'created_at' => $this->created_at,
+            'routes' => [
+                'show'=> $this->showRoute(),
+            ]
         ];
     }
 }
