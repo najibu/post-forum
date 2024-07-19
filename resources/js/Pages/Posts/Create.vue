@@ -6,19 +6,19 @@
             <form @submit.prevent="createPost" class="mt-6">
                 <div>
                     <InputLabel for="title" class="sr-only">Title</InputLabel>
-                    <TextInput id="title" v-model="form.title" class="w-full" placeholder="Give it a great title..." />
+                    <TextInput id="title" class="w-full" v-model="form.title" placeholder="Give it a great title…" />
                     <InputError :message="form.errors.title" class="mt-1" />
                 </div>
 
                 <div class="mt-3">
                     <InputLabel for="body" class="sr-only">Body</InputLabel>
                     <MarkdownEditor v-model="form.body" />
-                    <TextArea id="body" v-model="form.body" rows="25" class="mt-2"/>
+                    <TextArea id="body" v-model="form.body" rows="25" class="mt-2" />
                     <InputError :message="form.errors.body" class="mt-1" />
                 </div>
 
                 <div class="mt-3">
-                    <PrimaryButton type="submit">Creat  Post</PrimaryButton>
+                    <PrimaryButton type="submit">Create Post</PrimaryButton>
                 </div>
             </form>
         </Container>
@@ -26,21 +26,20 @@
 </template>
 
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue"
-import Container from '@/Components/Container.vue'
+import {useForm} from "@inertiajs/vue3";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import TextArea from "@/Components/TextArea.vue";
-import { useForm } from '@inertiajs/vue3'
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import Container from "@/Components/Container.vue";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 
 const form = useForm({
     title: '',
     body: '',
-})
+});
 
-const createPost = () => form.post(route('posts.store'))
-
+const createPost = () => form.post(route('posts.store'));
 </script>
