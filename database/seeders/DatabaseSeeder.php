@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $users = User::factory(10)->create();
+
         $posts = Post::factory(200)
             ->withFixtures()
             ->has(Comment::factory(15)->recycle($users))

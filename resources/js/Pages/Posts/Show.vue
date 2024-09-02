@@ -15,8 +15,13 @@
                     @submit.prevent="() => commentIdBeingEdited ? updateComment() : addComment()" class="mt-4">
                     <div>
                         <InputLabel for="body" class="sr-only">Comment</InputLabel>
-                        <TextArea ref="commentTextAreaRef" id="body" v-model="commentForm.body" class="mt-1"
-                            placeholder="Speak your mind" />
+                        <MarkdownEditor ref="commentTextAreaRef"
+                            id="body"
+                            v-model="commentForm.body"
+                            class="mt-1"
+                            placeholder="Speak your mind"
+                            editorClass="min-h-[160px]"
+                        />
                         <InputError :message="commentForm.errors.body" class="mt-1" />
                     </div>
 
@@ -42,17 +47,16 @@
 import AppLayout from "@/Layouts/AppLayout.vue"
 import Container from "@/Components/Container.vue"
 import { computed, ref } from 'vue'
-import {formatDistance, parseISO} from 'date-fns';
 import Pagination from "@/Components/Pagination.vue";
 import { relativeDate } from '@/Utilities/date.js';
 import Comment from "@/Components/Comment.vue";
 import InputLabel from '@/Components/InputLabel.vue';
-import TextArea from '@/Components/TextArea.vue';
 import { router, useForm } from '@inertiajs/vue3';
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputError from "@/Components/InputError.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { useConfirm } from "@/Utilities/Composables/useConfirm";
+import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 
 const props = defineProps(['post', 'comments'])
 

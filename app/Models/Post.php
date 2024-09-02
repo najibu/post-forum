@@ -4,17 +4,14 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\ConvertsMarkdownToHtml;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
     use HasFactory;
-
-    protected static function booted()
-    {
-        static::saving(fn (self $post) => $post->fill(['html' => str($post->body)->markdown()]));
-    }
+    use ConvertsMarkdownToHtml;
 
     public function user()
     {
