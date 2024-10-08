@@ -71,7 +71,6 @@ const autofill = async () => {
     if (isInProduction()) {
         return;
     }
-console.log('hit');
     const response = await axios.get('/local/post-content')
 
     form.title = response.data.title;
