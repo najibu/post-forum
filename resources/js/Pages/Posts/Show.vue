@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <Link rel="canonical" href="post.routes.show" />
+    </Head>
     <AppLayout :title="post.title">
         <Container>
             <Pill :href="route('posts.index', {topic: post.topic.slug})">
@@ -6,7 +9,7 @@
             </Pill>
             <PageHeading class="mt-2">{{ post.title }}</PageHeading>
 
-            <span class="block mt-1 text-sm text-gray-600">{{ formattedDate }} ago by {{ post.user.name }}</span>
+            <span class="block mt-1 text-sm text-gray-600">{{ formattedDate }} by {{ post.user.name }}</span>
 
             <article class="mt-6 prose prose-sm max-w-none" v-html="post.html">
             </article>
@@ -23,7 +26,7 @@
                             v-model="commentForm.body"
                             class="mt-1"
                             placeholder="Speak your mind"
-                            editorClass="min-h-[160px]"
+                            editorClass="!min-h-[160px]"
                         />
                         <InputError :message="commentForm.errors.body" class="mt-1" />
                     </div>
@@ -54,7 +57,7 @@ import Pagination from "@/Components/Pagination.vue";
 import { relativeDate } from '@/Utilities/date.js';
 import Comment from "@/Components/Comment.vue";
 import InputLabel from '@/Components/InputLabel.vue';
-import { router, useForm } from '@inertiajs/vue3';
+import { router, useForm, Head } from '@inertiajs/vue3';
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputError from "@/Components/InputError.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
@@ -117,7 +120,10 @@ const deleteComment = async (commentId) => {
         return
     }
 
-    router.delete(route('comments.destroy', { comment: commentId, page: props.comments.meta.current_page }), {
+    router.delete(route('comments.destroy', {
+        comment: commentId,
+        page: props.comments.data.length > 1 ?  props.comments.meta.current_page : Math.max(props.comments.meta.current_page - 1, 1)
+    }), {
         preserveScroll: true,
     })
 };

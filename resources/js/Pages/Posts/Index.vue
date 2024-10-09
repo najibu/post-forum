@@ -27,9 +27,12 @@
                     :key="post.id"
                     class="flex flex-col items-baseline md:flex-row justify-between"
                 >
-                    <Link :href="route('posts.index', {topic: post.topic.slug})" class="block group px-2 py-4">
-                    <span class="font-bold text-lg group-hover:text-indigo-500">{{ post.title }}</span>
-                    <span class="first-letter:uppercase block pt-1 text-sm text-gray-600">{{ formattedDate(post) }} ago
+                    <Link
+                        :href="post.routes.show"
+                        class="group block px-2 py-4"
+                    >
+                        <span class="font-bold text-lg group-hover:text-indigo-500">{{ post.title }}</span>
+                        <span class="first-letter:uppercase block pt-1 text-sm text-gray-600">{{ formattedDate(post) }}
                         by {{ post.user.name }}</span>
                     </Link>
 

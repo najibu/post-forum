@@ -42,7 +42,6 @@
 </template>
 
 <script setup>
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 
 import { Link } from "@inertiajs/vue3"
 import { computed } from 'vue'
@@ -58,6 +57,7 @@ const props = defineProps({
     }
 })
 
+const only = computed(() => props.only.length === 0 ? [] : [...props.only, 'jetstream'])
 const previousUrl = computed(() => props.meta.links[0].url)
 const nextUrl = computed(() => [...props.meta.links].reverse()[0].url)
 
