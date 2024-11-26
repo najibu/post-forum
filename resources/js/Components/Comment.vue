@@ -11,6 +11,24 @@
             </span>
 
             <div class="mt-2 flex justify-end space-x-3 empty:hidden">
+                <div v-if="$page.props.auth.user">
+                    <Link v-if="comment.can.like"
+                        preserve-scroll
+                        :href="route('likes.store', ['comment', comment.id])"
+                        method="post"
+                        class="inline-block text-gray-700 hover:text-pink-500 transition-colors">
+                        <HandThumbUpIcon class="size-4 inline-block mr-1"/>
+                        <span class="sr-only">Like Comment</span>
+                    </Link>
+                    <Link v-else
+                        preserve-scroll
+                        :href="route('likes.destroy', ['comment', comment.id])"
+                        method="delete"
+                        class="inline-block text-gray-700 hover:text-pink-500 transition-colors">
+                        <HandThumbDownIcon class="size-4 inline-block mr-1"/>
+                        <span class="sr-only">Unlike</span>
+                    </Link>
+                </div>
                 <form v-if="comment.can?.update" @submit.prevent="$emit('edit', comment.id)">
                     <button class="font-mono text-xs hover:font-semibold">Edit</button>
                 </form>
@@ -25,6 +43,8 @@
 
 <script setup>
 import { relativeDate } from '@/Utilities/date.js';
+import { Link } from '@inertiajs/vue3';
+import {HandThumbDownIcon, HandThumbUpIcon} from "@heroicons/vue/20/solid/index.js";
 
 const props = defineProps(['comment']);
 
